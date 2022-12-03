@@ -22,7 +22,7 @@ function AllowList({ isOpen, onClose }: Props) {
     const [addresses, setAddresses] = useState<string[]>([''])
 
     const onContinue = async () => {
-        
+
     }
 
     return (
@@ -31,7 +31,7 @@ function AllowList({ isOpen, onClose }: Props) {
             <ModalContent>
                 <ModalCloseButton />
                 <Flex direction="column" align='center' p={6}>
-                    <Image src='/safe-header.svg' w='97px' h='107px' alt='safe-header' />
+                    <Image src='/allow-list-icon.svg' w='97px' h='107px' alt='safe-header' />
                     <Text mt={6} fontWeight='500' fontSize={'24px'}>
                         Allow list Guard
                     </Text>
