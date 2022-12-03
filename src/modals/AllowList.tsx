@@ -21,6 +21,10 @@ function AllowList({ isOpen, onClose }: Props) {
     // By default 1 address needs to be there
     const [addresses, setAddresses] = useState<string[]>([''])
 
+    const onContinue = async () => {
+        
+    }
+
     return (
         <Modal isCentered={true} isOpen={isOpen} size="2xl" onClose={onClose}>
             <ModalOverlay backdropFilter="blur(12px)" />
@@ -57,7 +61,7 @@ function AllowList({ isOpen, onClose }: Props) {
                         }}>Add Address</Button>
                     </Flex>
 
-                    <Button mt={4} w='100%' bg='#47C95E' color='white'>
+                    <Button mt={4} w='100%' bg='#47C95E' color='white' onClick={onContinue}>
                         Continue
                     </Button>
                 </Flex>
