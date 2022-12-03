@@ -22,8 +22,8 @@ function Home() {
     setIsTransactionInitiatedModalOpen(false)
   }
 
-  const { connector: activeConnector, isConnected, address } = useAccount()
-  const { connect, connectors, error, isLoading, pendingConnector } = useConnect()
+  const { isConnected } = useAccount()
+  const { connect, connectors } = useConnect()
 
   const onAllowList = async () => {
     if (isConnected) {
