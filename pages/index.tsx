@@ -5,6 +5,7 @@ import ConnectSafe from '../src/modals/ConnectSafe'
 import { useAccount, useConnect } from 'wagmi'
 import AllowList from '../src/modals/AllowList'
 import TransactionInitiatedModal from '../src/modals/TransactionInitiated'
+import DenyList from '../src/modals/DenyList'
 
 function Home() {
   const [isConnectSafeModalOpen, setIsConnectSafeModalOpen] = useState(false)
@@ -16,6 +17,11 @@ function Home() {
   const onAllowListModalClose = async () => {
     setIsAllowListModalOpen(false)
   }
+
+  const [isDenyListModalOpen, setIsDenyListModalOpen] = useState(false)
+  const onDenyListModalClose = async () => {
+    setIsDenyListModalOpen(false)
+  }  
 
   const [isTransactionInitatedModalOpen, setIsTransactionInitiatedModalOpen] = useState(false)
   const onTransactionInitiatedModalClose = async () => {
@@ -29,9 +35,12 @@ function Home() {
     console.log(address)
   }, [address])
 
-  const onAllowList = async () => {
+  const onClick = async (index: number) => {
     if (isConnected) {
+      if (index === 0) {
       setIsAllowListModalOpen(true)
+      } else if (index === 1) setIsDenyListModalOpen(true)
+      else {}
     } else {
       connect({ connector: connectors[0] })
     }
@@ -57,11 +66,12 @@ function Home() {
               {guard.title}
             </Text>
             <Text mt={1} textAlign='center'>{guard.subtitle}</Text>
-            <Button color='white' mt={6} bg='#47C95E' onClick={onAllowList}>Set Guard</Button>
+            <Button color='white' mt={6} bg='#47C95E' onClick={() => {onClick(index)}}>Set Guard</Button>
           </Flex>
         })}
       </Flex>
     <AllowList isOpen={isAllowListModalOpen} onClose={onAllowListModalClose} />
+    <DenyList isOpen={isDenyListModalOpen} onClose={onDenyListModalClose} />
     <ConnectSafe isOpen={isConnectSafeModalOpen} onClose={onConnectSafeModalClose} />
     <TransactionInitiatedModal isOpen={isTransactionInitatedModalOpen} onClose={onTransactionInitiatedModalClose} />
   </Flex>

@@ -13,20 +13,19 @@ import {
 import EthersAdapter from "@safe-global/safe-ethers-lib";
 import { useEffect, useMemo, useState } from "react";
 import { useAccount, useConnect, useContract, useSigner } from 'wagmi'
-import AllowDeployerABI from "../abis/AllowDeployer.json"
-import AllowTransactionGuardABI from "../abis/AllowTransactionGuard.json"
+import DenyDeployerABI from "../abis/DenyDeployer.json"
 import SafeServiceClient from '@safe-global/safe-service-client'
 import { delay } from "../utils/time";
 import { ethers } from "ethers"
 import Safe from "@safe-global/safe-core-sdk";
-import { ALLOW_GUARD_CONTRACT } from "../utils/constants";
+import { DENY_GUARD_CONTRACT } from "../utils/constants";
 
 interface Props {
     isOpen: boolean;
     onClose: () => void;
 }
 
-function AllowList({ isOpen, onClose }: Props) {
+function DenyList({ isOpen, onClose }: Props) {
     // By default 1 address needs to be there
     const [addresses, setAddresses] = useState<string[]>([''])
     const [safeAddress, setSafeAddress] = useState<string>()
@@ -36,10 +35,10 @@ function AllowList({ isOpen, onClose }: Props) {
         chainId: 5,
     })
     const factoryContract = useContract({
-        address: ALLOW_GUARD_CONTRACT,
+        address: DENY_GUARD_CONTRACT,
         // address: '0x0AaFbF1D44bF18e3525c894B7977164e8872f13a',
         // abi: AllowDeployerABI,
-        abi: AllowDeployerABI,
+        abi: DenyDeployerABI,
         signerOrProvider: signer
     })
 
@@ -123,12 +122,12 @@ function AllowList({ isOpen, onClose }: Props) {
             <ModalContent>
                 <ModalCloseButton />
                 <Flex direction="column" align='center' p={6}>
-                    <Image src='/allow-list-icon.svg' w='97px' h='107px' alt='safe-header' />
+                    <Image src='/deny-list-icon.svg' w='97px' h='107px' alt='safe-header' />
                     <Text mt={6} fontWeight='500' fontSize={'24px'}>
-                        Allow list Guard
+                        Deny list Guard
                     </Text>
                     <Text fontSize='14px' lineHeight={'20px'} textAlign={'center'} mt={1}>
-                        Setup a list of addresses that can be used as the destination in transaction.
+                        Setup a list of addresses that cannot be used as the destination in transaction.
                     </Text>
 
                     <Flex justify={'start'} w='100%' mt={8}>
@@ -172,4 +171,4 @@ function AllowList({ isOpen, onClose }: Props) {
     );
 }
 
-export default AllowList;
+export default DenyList;
