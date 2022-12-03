@@ -14,6 +14,7 @@ import EthersAdapter from "@safe-global/safe-ethers-lib";
 import { useEffect, useMemo, useState } from "react";
 import { useAccount, useConnect, useContract, useSigner } from 'wagmi'
 import AllowDeployerABI from "../abis/AllowDeployer.json"
+import AllowTransactionGuardABI from "../abis/AllowTransactionGuard.json"
 import SafeServiceClient from '@safe-global/safe-service-client'
 import { delay } from "../utils/time";
 import { ethers } from "ethers"
@@ -27,14 +28,16 @@ interface Props {
 function AllowList({ isOpen, onClose }: Props) {
     // By default 1 address needs to be there
     const [addresses, setAddresses] = useState<string[]>([''])
+    const [safeAddress, setSafeAddress] = useState<string>()
     const [loading, setLoading] = useState(false)
     const { address } = useAccount()
     const { data: signer } = useSigner({
         chainId: 5,
     })
     const factoryContract = useContract({
-        address: '0x620386A9e02B8e14B68B55f8E2dD42204A5809ce',
-        // address: '0x39865591166a83e8AF6A27B6192B9a7CFB9f3111',
+        address: '0x5d809a91623a7bc3fceBd492e4a9abf85291C7D8',
+        // address: '0x0AaFbF1D44bF18e3525c894B7977164e8872f13a',
+        // abi: AllowDeployerABI,
         abi: AllowDeployerABI,
         signerOrProvider: signer
     })
@@ -45,7 +48,7 @@ function AllowList({ isOpen, onClose }: Props) {
                 return;
             }
         }
-        if (!signer || !address) {
+        if (!signer || !address || !safeAddress) {
             return
         }
         setLoading(true)
@@ -54,9 +57,15 @@ function AllowList({ isOpen, onClose }: Props) {
         console.log(factoryContract, signer)
         if (!factoryContract) return
 
+        // console.log(await factoryContract.whitelisted('0x631088Af5A770Bee50FFA7dd5DC18994616DC1fF'))
+        // console.log(await factoryContract.whitelisted('0x4e35fF1872A720695a741B00f2fA4D1883440baC'))
+        // console.log(await factoryContract.whitelisted('0x4bED464ce9D43758e826cfa173f1cDa82964b894'))
+
+        // return
+
         const prevCounter = await factoryContract.counter()
         console.log(prevCounter)
-        const safeAddress = '0xc84c5bb248edb2645C375cC0e95EA78d412AC77E'
+        // const safeAddress = '0x92CA6E32B1552F6E5d323f0cA9D87FF482f2207D'
         factoryContract.deploy(addresses, safeAddress)
 
         while (true) {
@@ -121,8 +130,18 @@ function AllowList({ isOpen, onClose }: Props) {
                         Setup a list of addresses that can be used as the destination in transaction.
                     </Text>
 
-                    <Flex justify={'start'} w='100%'>
-                        <Text fontSize='14px' fontWeight={'500'} lineHeight={'20px'} mt={8}>
+                    <Flex justify={'start'} w='100%' mt={8}>
+                        <Text fontSize='14px' fontWeight={'500'} lineHeight={'20px'}>
+                            Safe address
+                        </Text>
+                    </Flex>
+
+                    <Input mt={2} bg='#E8F0F1' placeholder="0x2F05BFDc43e1bAAebdc3D507785fb942eE5c" borderRadius={'4px'} key={safeAddress} value={safeAddress} onChange={(e) => {
+                        setSafeAddress(e.target.value)
+                    }} />
+
+                    <Flex justify={'start'} w='100%' mt={4}>
+                        <Text fontSize='14px' fontWeight={'500'} lineHeight={'20px'}>
                             Address
                         </Text>
                     </Flex>
@@ -138,13 +157,13 @@ function AllowList({ isOpen, onClose }: Props) {
                     }
 
                     <Flex justify={'start'} w='100%'>
-                        <Button color='black' leftIcon={<Image alt='address-add' src='/add.svg' boxSize={'20px'} />} p={4} variant='link' onClick={() => {
+                        <Button disabled={addresses[addresses.length - 1] === ''} color='black' leftIcon={<Image alt='address-add' src='/add.svg' boxSize={'20px'} />} p={4} variant='link' onClick={() => {
                             setAddresses([...addresses, ''])
                         }}>Add Address</Button>
                     </Flex>
 
-                    <Button mt={4} w='100%' bg='#47C95E' color='white' onClick={onContinue}>
-                        {loading ? <CircularProgress m={2} color='white' isIndeterminate /> : 'Continue'}
+                    <Button mt={4} p={loading ? 2 : 0} w='100%' bg='#47C95E' color='white' onClick={onContinue}>
+                        {loading ? <CircularProgress color='white' isIndeterminate /> : 'Continue'}
                     </Button>
                 </Flex>
             </ModalContent>
