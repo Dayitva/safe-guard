@@ -1,6 +1,6 @@
 
 import { Button, Flex, Text, Image } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ConnectSafe from '../src/modals/ConnectSafe'
 import { useAccount, useConnect } from 'wagmi'
 import AllowList from '../src/modals/AllowList'
@@ -22,8 +22,12 @@ function Home() {
     setIsTransactionInitiatedModalOpen(false)
   }
 
-  const { isConnected } = useAccount()
+  const { isConnected, address } = useAccount()
   const { connect, connectors } = useConnect()
+
+  useEffect(() => {
+    console.log(address)
+  }, [address])
 
   const onAllowList = async () => {
     if (isConnected) {

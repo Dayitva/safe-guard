@@ -1,0 +1,52 @@
+[
+  {
+    "inputs": [],
+    "name": "counter",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "_whitelisted",
+        "type": "address[]"
+      },
+      {
+        "internalType": "address",
+        "name": "_safeAddress",
+        "type": "address"
+      }
+    ],
+    "name": "deploy",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "deployedContracts",
+    "outputs": [
+      {
+        "internalType": "contract AllowTransactionGuard",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
