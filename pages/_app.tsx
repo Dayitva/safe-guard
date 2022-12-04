@@ -1,13 +1,13 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { WagmiConfig, createClient, configureChains, defaultChains } from 'wagmi'
+import { WagmiConfig, createClient, configureChains, defaultChains, defaultL2Chains } from 'wagmi'
 import { infuraProvider } from '@wagmi/core/providers/infura'
 import { getDefaultProvider } from 'ethers'
 // 1. import `ChakraProvider` component
 import { ChakraProvider } from '@chakra-ui/react'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
-const { chains, provider } = configureChains(defaultChains, [
+const { chains, provider } = configureChains([...defaultChains, ...defaultL2Chains], [
   infuraProvider({ apiKey: 'c72c423442fa4e36aaa6a1d45f4a5edb' }),
 ])
 
