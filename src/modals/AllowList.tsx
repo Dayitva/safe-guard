@@ -52,6 +52,8 @@ function AllowList({ isOpen, onClose }: Props) {
         if (!signer || !address || !safeAddress) {
             return
         }
+        localStorage.setItem('allow-safe', safeAddress)
+
         setLoading(true)
         console.log(address)
         console.log(addresses)
@@ -115,6 +117,7 @@ function AllowList({ isOpen, onClose }: Props) {
         })
         console.log(safeRet)
         setLoading(false)
+
     }
 
     return (

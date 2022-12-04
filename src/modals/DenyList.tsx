@@ -51,6 +51,8 @@ function DenyList({ isOpen, onClose }: Props) {
         if (!signer || !address || !safeAddress) {
             return
         }
+        localStorage.setItem('deny-safe', safeAddress)
+
         setLoading(true)
         console.log(address)
         console.log(addresses)

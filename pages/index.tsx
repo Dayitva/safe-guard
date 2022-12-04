@@ -1,13 +1,18 @@
 
 import { Button, Flex, Text, Image } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import ConnectSafe from '../src/modals/ConnectSafe'
-import { useAccount, useConnect } from 'wagmi'
+import { useAccount, useConnect, useProvider, useSigner } from 'wagmi'
 import AllowList from '../src/modals/AllowList'
 import TransactionInitiatedModal from '../src/modals/TransactionInitiated'
 import DenyList from '../src/modals/DenyList'
 import Gas from '../src/modals/Gas'
 import Ephemereal from '../src/modals/Ephemereal'
+import EthersAdapter from '@safe-global/safe-ethers-lib'
+import { ethers } from 'ethers'
+import SafeServiceClient from '@safe-global/safe-service-client'
+import Safe from '@safe-global/safe-core-sdk'
+import { RepeatIcon } from '@chakra-ui/icons'
 
 function Home() {
   const [isConnectSafeModalOpen, setIsConnectSafeModalOpen] = useState(false)
@@ -59,6 +64,47 @@ function Home() {
     }
   }
 
+  const [areGuardsSet, setAreGuardsSet] = useState<boolean[]>([false, false, false, false])
+  const {data: signer} = useSigner({chainId: 5})
+
+  const isGuardSetForSafe = async (safeAddress: string) => {
+    console.log(signer)
+    if (!signer) {
+      connect({connector: connectors[0]})
+      return false
+    }
+    const ethAdapter = new EthersAdapter({
+      ethers,
+      signerOrProvider: signer,
+    })
+
+    console.log(ethAdapter, safeAddress)
+    const safeSdk = await Safe.create({ ethAdapter, safeAddress })
+    const guardAddress = await safeSdk.getGuard()
+    console.log('Guard address for safe: ', safeAddress, 'is: ', guardAddress)
+    return guardAddress !== '0x0000000000000000000000000000000000000000'
+  }
+
+  const isGuardSet = async (index: number) => {
+    if (index === 0) {
+      const allowSafe = localStorage.getItem('allow-safe')
+      console.log('Allow Safe: ', allowSafe)
+      if (allowSafe) {
+        const copy = [...areGuardsSet]
+        copy[index] = await isGuardSetForSafe(allowSafe)
+        setAreGuardsSet(copy)
+      }
+    } else if (index === 1) {
+      const denySafe = localStorage.getItem('deny-safe')
+      console.log('Deny safe: ', denySafe)
+      if (denySafe) {
+        const copy = [...areGuardsSet]
+        copy[index] = await isGuardSetForSafe(denySafe)
+        setAreGuardsSet(copy)
+      }
+    } else return false
+  }
+
   return <Flex direction='column' align='center' bg='#EEF0F2' h='100vh' p={8}>
     <Text fontWeight={'700'} fontSize='44px'>
       Setup financial guards on your Gnosis Safe
@@ -79,7 +125,13 @@ function Home() {
             {guard.title}
           </Text>
           <Text mt={1} textAlign='center'>{guard.subtitle}</Text>
-          <Button color='white' mt={6} bg='#47C95E' onClick={() => { onClick(index) }}>Set Guard</Button>
+          <Flex align='center' mt={6}>
+            <Button disabled={areGuardsSet[index]} color='white' bg='#47C95E' onClick={() => { onClick(index) }}>Set Guard</Button>
+            {!areGuardsSet[index] && <RepeatIcon ml={2} cursor={'pointer'} onClick={() => {
+              isGuardSet(index)
+            }} />}
+          </Flex>
+
         </Flex>
       })}
     </Flex>
