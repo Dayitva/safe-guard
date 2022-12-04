@@ -6,6 +6,8 @@ import { useAccount, useConnect } from 'wagmi'
 import AllowList from '../src/modals/AllowList'
 import TransactionInitiatedModal from '../src/modals/TransactionInitiated'
 import DenyList from '../src/modals/DenyList'
+import Gas from '../src/modals/Gas'
+import Ephemereal from '../src/modals/Ephemereal'
 
 function Home() {
   const [isConnectSafeModalOpen, setIsConnectSafeModalOpen] = useState(false)
@@ -14,18 +16,23 @@ function Home() {
   }
 
   const [isAllowListModalOpen, setIsAllowListModalOpen] = useState(false)
-  const onAllowListModalClose = async () => {
+  const onAllowListModalClose = () => {
     setIsAllowListModalOpen(false)
   }
 
   const [isDenyListModalOpen, setIsDenyListModalOpen] = useState(false)
-  const onDenyListModalClose = async () => {
+  const onDenyListModalClose = () => {
     setIsDenyListModalOpen(false)
   }
 
   const [isGasModalOpen, setIsGasModalOpen] = useState(false)
-  const onDGasModalClose = async () => {
-    setIsDenyListModalOpen(false)
+  const onGasModalClose = () => {
+    setIsGasModalOpen(false)
+  }
+
+  const [timeLockModalOpen, setTimeLockModalOpen] = useState(false)
+  const onTimeLockModalClose = () => {
+    setTimeLockModalOpen(false)
   }
 
   const [isTransactionInitatedModalOpen, setIsTransactionInitiatedModalOpen] = useState(false)
@@ -46,7 +53,7 @@ function Home() {
         setIsAllowListModalOpen(true)
       } else if (index === 1) setIsDenyListModalOpen(true)
       else if (index === 2) { setIsGasModalOpen(true) }
-      else if (index === 3) setIsTransactionInitiatedModalOpen(true)
+      else if (index === 3) setTimeLockModalOpen(true)
     } else {
       connect({ connector: connectors[0] })
     }
@@ -78,6 +85,8 @@ function Home() {
     </Flex>
     <AllowList isOpen={isAllowListModalOpen} onClose={onAllowListModalClose} />
     <DenyList isOpen={isDenyListModalOpen} onClose={onDenyListModalClose} />
+    <Gas isOpen={isGasModalOpen} onClose={onGasModalClose} />
+    <Ephemereal isOpen={timeLockModalOpen} onClose={onTimeLockModalClose} />
     <ConnectSafe isOpen={isConnectSafeModalOpen} onClose={onConnectSafeModalClose} />
     <TransactionInitiatedModal isOpen={isTransactionInitatedModalOpen} onClose={onTransactionInitiatedModalClose} />
   </Flex>

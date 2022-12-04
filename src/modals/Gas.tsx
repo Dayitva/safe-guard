@@ -54,9 +54,9 @@ function Gas({ isOpen, onClose }: Props) {
             <ModalContent>
                 <ModalCloseButton />
                 <Flex direction="column" align='center' p={6}>
-                    <Image src='/allow-list-icon.svg' w='97px' h='107px' alt='safe-header' />
+                    <Image src='/gas-icon.svg' w='97px' h='107px' alt='safe-header' />
                     <Text mt={6} fontWeight='500' fontSize={'24px'}>
-                        Allow list Guard
+                        Gas Price
                     </Text>
                     <Text fontSize='14px' lineHeight={'20px'} textAlign={'center'} mt={1}>
                         Setup a list of addresses that can be used as the destination in transaction.
@@ -72,14 +72,14 @@ function Gas({ isOpen, onClose }: Props) {
                         setSafeAddress(e.target.value)
                     }} />
 
-                    <Flex justify={'start'} w='100%' mt={8}>
+                    <Flex justify={'start'} w='100%' mt={4}>
                         <Text fontSize='14px' lineHeight={'20px'}>
                             Maximum gas cost (in ETH)
                         </Text>
                     </Flex>
 
                     <Input mt={2} bg='#E8F0F1' placeholder="0.05 ETH" borderRadius={'4px'} key={safeAddress} value={safeAddress} onChange={(e) => {
-                        setSafeAddress(e.target.value)
+                        setMaxGasPrice(e.target.value)
                     }} />
 
                     <Flex justify={'start'} w='100%' mt={4}>

@@ -45,7 +45,7 @@ function Ephemereal({ isOpen, onClose }: Props) {
     })
 
     const onContinue = async () => {
-        
+
     }
 
     return (
@@ -54,9 +54,9 @@ function Ephemereal({ isOpen, onClose }: Props) {
             <ModalContent>
                 <ModalCloseButton />
                 <Flex direction="column" align='center' p={6}>
-                    <Image src='/allow-list-icon.svg' w='97px' h='107px' alt='safe-header' />
+                    <Image src='/ephemeral-safe-icon.svg' w='97px' h='107px' alt='safe-header' />
                     <Text mt={6} fontWeight='500' fontSize={'24px'}>
-                        Allow list Guard
+                        Time Lock safe
                     </Text>
                     <Text fontSize='14px' lineHeight={'20px'} textAlign={'center'} mt={1}>
                         Setup a list of addresses that can be used as the destination in transaction.
@@ -72,13 +72,13 @@ function Ephemereal({ isOpen, onClose }: Props) {
                         setSafeAddress(e.target.value)
                     }} />
 
-<Flex justify={'start'} w='100%' mt={8}>
+                    <Flex justify={'start'} w='100%' mt={4}>
                         <Text fontSize='14px' fontWeight={'500'} lineHeight={'20px'}>
                             Validity period (in days)
                         </Text>
                     </Flex>
 
-                    <Input mt={2} bg='#E8F0F1' type='number' placeholder="0x2F05BFDc43e1bAAebdc3D507785fb942eE5c" borderRadius={'4px'} key={safeAddress} value={safeAddress} onChange={(e) => {
+                    <Input mt={2} bg='#E8F0F1' type='number' placeholder="2" borderRadius={'4px'} key={validity} value={validity} onChange={(e) => {
                         setValidity(parseInt(e.target.value))
                     }} />
 
