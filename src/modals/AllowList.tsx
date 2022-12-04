@@ -128,10 +128,10 @@ function AllowList({ isOpen, onClose }: Props) {
                 <Flex direction="column" align='center' p={6}>
                     <Image src='/allow-list-icon.svg' w='97px' h='107px' alt='safe-header' />
                     <Text mt={6} fontWeight='500' fontSize={'24px'}>
-                        Allow list Guard
+                        Allow List Guard
                     </Text>
                     <Text fontSize='14px' lineHeight={'20px'} textAlign={'center'} mt={1}>
-                        Setup a list of addresses that can be used as the destination in transaction.
+                        Allow transactions to be sent only to a certain destinations addresses
                     </Text>
 
                     <Flex justify={'start'} w='100%' mt={8}>

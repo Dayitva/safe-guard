@@ -107,14 +107,14 @@ function Home() {
 
   return <Flex direction='column' align='center' bg='#EEF0F2' h='100vh' p={8}>
     <Text fontWeight={'700'} fontSize='44px'>
-      Setup financial guards on your Gnosis Safe
+       SafeGuard
     </Text>
-    <Text mt={8}>
-      Financial guards allow you to safeguard your assets and enhance experience on your Gnosis safe.
+    <Text mt={8} fontWeight='400' fontSize={'28px'}>
+      Customisable On-Chain Financial Controllers For Your Safes
     </Text>
-    <Flex justify={'start'} w='100%'>
+    <Flex justify={'center'} w='100%'>
       <Text mt={10} fontWeight='700' fontSize={'24px'}>
-        Guards
+        Available Guards
       </Text>
     </Flex>
     <Flex mt={4}>
@@ -145,10 +145,10 @@ function Home() {
 }
 
 const guards = [
-  { title: 'Allow List', subtitle: 'Setup a list of addresses that can be used as the destination in transactions.', icon: '/allow-list-icon.svg' },
-  { title: 'Deny List', subtitle: 'Setup a list of addresses that can be used as the destination in transactions.', icon: '/deny-list-icon.svg' },
-  { title: 'Gas Price', subtitle: 'Allow transactions for a specific gas price range.', icon: '/gas-icon.svg' },
-  { title: 'Time lock Safe', subtitle: 'Allow safes to be used within a specific  time period.', icon: '/ephemeral-safe-icon.svg' },
+  { title: 'Allow List', subtitle: 'Allow transactions to be sent only to a certain destinations addresses', icon: '/allow-list-icon.svg' },
+  { title: 'Deny List', subtitle: 'Setup a list of addresses that cannot be used as the destination in transactions.', icon: '/deny-list-icon.svg' },
+  { title: 'Gas Volatility', subtitle: 'Allow transactions to execute only within a specific gas price range.', icon: '/gas-icon.svg' },
+  { title: 'Time Lock', subtitle: 'Manage access control for the safes for only a specific time period.', icon: '/ephemeral-safe-icon.svg' },
 ]
 
 export default Home

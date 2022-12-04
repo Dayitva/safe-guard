@@ -56,10 +56,10 @@ function Gas({ isOpen, onClose }: Props) {
                 <Flex direction="column" align='center' p={6}>
                     <Image src='/gas-icon.svg' w='97px' h='107px' alt='safe-header' />
                     <Text mt={6} fontWeight='500' fontSize={'24px'}>
-                        Gas Price
+                        Gas Volatility Guard
                     </Text>
                     <Text fontSize='14px' lineHeight={'20px'} textAlign={'center'} mt={1}>
-                        Setup a list of addresses that can be used as the destination in transaction.
+                        Allow transactions to execute only within a specific gas price range.
                     </Text>
 
                     <Flex justify={'start'} w='100%' mt={8}>
@@ -74,35 +74,13 @@ function Gas({ isOpen, onClose }: Props) {
 
                     <Flex justify={'start'} w='100%' mt={4}>
                         <Text fontSize='14px' lineHeight={'20px'}>
-                            Maximum gas cost (in ETH)
+                            Maximum Gas Price (in wei)
                         </Text>
                     </Flex>
 
                     <Input mt={2} bg='#E8F0F1' placeholder="0.05 ETH" borderRadius={'4px'} key={safeAddress} value={safeAddress} onChange={(e) => {
                         setMaxGasPrice(e.target.value)
                     }} />
-
-                    <Flex justify={'start'} w='100%' mt={4}>
-                        <Text fontSize='14px' fontWeight={'500'} lineHeight={'20px'}>
-                            Address
-                        </Text>
-                    </Flex>
-
-                    {
-                        addresses.map((address, index) => {
-                            return <Input mt={2} bg='#E8F0F1' placeholder="0x2F05BFDc43e1bAAebdc3D507785fb942eE5c" borderRadius={'4px'} key={address} value={address} onChange={(e) => {
-                                const copy = [...addresses]
-                                copy[index] = e.target.value
-                                setAddresses(copy)
-                            }} />
-                        })
-                    }
-
-                    <Flex justify={'start'} w='100%'>
-                        <Button disabled={addresses[addresses.length - 1] === ''} color='black' leftIcon={<Image alt='address-add' src='/add.svg' boxSize={'20px'} />} p={4} variant='link' onClick={() => {
-                            setAddresses([...addresses, ''])
-                        }}>Add Address</Button>
-                    </Flex>
 
                     <Button mt={4} p={loading ? 2 : 0} w='100%' bg='#47C95E' color='white' onClick={onContinue}>
                         {loading ? <CircularProgress color='white' isIndeterminate /> : 'Continue'}
